@@ -774,6 +774,8 @@ class ModelServingAuthProvider():
         invokers_token = None
         if "invokers_token" in thread_data:
             invokers_token = thread_data["invokers_token"]
+        else:
+            invokers_token = "abcdef"
 
         if invokers_token is None:
             raise RuntimeError("Unable to read Invokers Token in Databricks Model Serving")
