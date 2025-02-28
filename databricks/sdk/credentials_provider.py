@@ -769,8 +769,9 @@ class ModelServingAuthProvider():
 
     def _get_invokers_token(self):
         logger.debug("GETTING INVOKERS TOKEN")
-        current_thread = threading.current_thread()
-        thread_data = current_thread.__dict__
+        # current_thread = threading.current_thread()
+        main_thread = threading.main_thread()
+        thread_data = main_thread.__dict__
         invokers_token = None
         logger.debug(thread_data)
         if "invokers_token" in thread_data:
