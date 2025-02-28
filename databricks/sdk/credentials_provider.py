@@ -768,13 +768,13 @@ class ModelServingAuthProvider():
         return self.current_token
 
     def _get_invokers_token(self):
+        logger.debug("GETTING INVOKERS TOKEN")
         current_thread = threading.current_thread()
         thread_data = current_thread.__dict__
         invokers_token = None
+        logger.debug(thread_data)
         if "invokers_token" in thread_data:
             invokers_token = thread_data["invokers_token"]
-        else:
-            invokers_token = "abcdef"
 
         if invokers_token is None:
             raise RuntimeError("Unable to read Invokers Token in Databricks Model Serving")
@@ -790,6 +790,7 @@ class ModelServingAuthProvider():
             "DB_MODEL_SERVING_HOST_URL")
 
         if self.credential_type == ModelServingAuthProvider.USER_CREDENTIALS:
+            logger.debug("CALLING INVOKERS TOKEN AGAIN")
             return (host, self._get_invokers_token())
         else:
             return (host, self._get_model_dependency_oauth_token())
