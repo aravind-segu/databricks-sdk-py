@@ -742,8 +742,7 @@ class ModelServingAuthProvider():
 
         is_in_model_serving_env = (os.environ.get("IS_IN_DB_MODEL_SERVING_ENV")
                                    or os.environ.get("IS_IN_DATABRICKS_MODEL_SERVING_ENV") or "false")
-        return (is_in_model_serving_env == "true"
-                and os.path.isfile(ModelServingAuthProvider._MODEL_DEPENDENCY_OAUTH_TOKEN_FILE_PATH))
+        return (is_in_model_serving_env == "true")
 
     def _get_model_dependency_oauth_token(self, should_retry=True) -> str:
         # Use Cached value if it is valid

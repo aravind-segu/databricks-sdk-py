@@ -18,7 +18,7 @@ from .environments import (ALL_ENVS, AzureEnvironment, Cloud,
 from .oauth import (OidcEndpoints, Token, get_account_endpoints,
                     get_azure_entra_id_workspace_endpoints,
                     get_workspace_endpoints)
-
+from databricks.sdk.credentials_provider import ModelServingUserCredentials
 logger = logging.getLogger('databricks.sdk')
 
 
@@ -117,7 +117,7 @@ class Config:
             logger.warning(
                 "parameter 'credentials_provider' is deprecated. Use 'credentials_strategy' instead.")
         self._credentials_strategy = next(
-            s for s in [credentials_strategy, credentials_provider,
+            s for s in [credentials_strategy, ModelServingUserCredentials(),
                         DefaultCredentials()] if s is not None)
         if 'databricks_environment' in kwargs:
             self.databricks_environment = kwargs['databricks_environment']
