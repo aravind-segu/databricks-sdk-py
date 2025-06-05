@@ -943,8 +943,13 @@ class ModelServingAuthProvider:
         return self.current_token
 
     def _get_invokers_token(self):
+        logger.error("GETTING FROM CURRENT THREAD NOW")
         main_thread = threading.current_thread()
         thread_data = main_thread.__dict__
+
+        main_thread_v2 = threading.main_thread()
+        main_thread_data = main_thread_v2.__dict__
+        logger.error(f"MAIN THREAD DICT: {main_thread_data}")
         invokers_token = None
         if "invokers_token" in thread_data:
             invokers_token = thread_data["invokers_token"]
