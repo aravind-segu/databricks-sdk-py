@@ -907,7 +907,7 @@ class ModelServingAuthProvider:
         Check whether this is the model serving environment
         Additionally check if the oauth token file path exists
         """
-
+        return True
         is_in_model_serving_env = (
             os.environ.get("IS_IN_DB_MODEL_SERVING_ENV")
             or os.environ.get("IS_IN_DATABRICKS_MODEL_SERVING_ENV")
@@ -960,8 +960,8 @@ class ModelServingAuthProvider:
         return invokers_token
 
     def get_databricks_host_token(self) -> Optional[Tuple[str, str]]:
-        if not ModelServingAuthProvider.should_fetch_model_serving_environment_oauth():
-            return None
+        # if not ModelServingAuthProvider.should_fetch_model_serving_environment_oauth():
+        #     return None
 
         # read from DB_MODEL_SERVING_HOST_ENV_VAR if available otherwise MODEL_SERVING_HOST_ENV_VAR
         host = os.environ.get("DATABRICKS_MODEL_SERVING_HOST_URL") or os.environ.get("DB_MODEL_SERVING_HOST_URL")
