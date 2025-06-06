@@ -1080,21 +1080,15 @@ class ModelServingUserCredentials(CredentialsStrategy):
 
     def __init__(self):
         self.credential_type = ModelServingAuthProvider.USER_CREDENTIALS
-        self.default_credentials = DefaultCredentials()
 
     def auth_type(self):
-        if ModelServingAuthProvider.should_fetch_model_serving_environment_oauth():
-            return "model_serving_" + self.credential_type
-        else:
-            return self.default_credentials.auth_type()
+        return "model_serving_" + self.credential_type
 
     def __call__(self, cfg: "Config") -> CredentialsProvider:
-        if ModelServingAuthProvider.should_fetch_model_serving_environment_oauth():
-            header_factory = model_serving_auth_visitor(cfg, self.credential_type)
-            if not header_factory:
-                raise ValueError(
-                    f"Unable to authenticate using {self.credential_type} in Databricks Model Serving Environment"
-                )
-            return header_factory
-        else:
-            return self.default_credentials(cfg)
+        logger.error("FETCHING INVOKERS TOKEN FROM MODEL SERVING USER CREDENTIALS")
+        header_factory = model_serving_auth_visitor(cfg, self.credential_type)
+        if not header_factory:
+            raise ValueError(
+                f"Unable to authenticate using {self.credential_type} in Databricks Model Serving Environment"
+            )
+        return header_factory
