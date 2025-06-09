@@ -4565,7 +4565,7 @@ class ServingEndpointsAPI:
             "Accept": "application/json",
             "Content-Type": "application/json",
         }
-
+        print(f"SENDING BODY: {body}")
         op_response = self._api.do("POST", "/api/2.0/serving-endpoints", body=body, headers=headers)
         return Wait(
             self.wait_get_serving_endpoint_not_updating,
